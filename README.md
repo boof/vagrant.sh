@@ -97,7 +97,7 @@ Modules
 Usage
 -----
 
-To tell vagrant to use a shell script for provisioning you have to tell Vagrant about it in your Vagrantfile:
+To use a shell script for provisioning you have to tell Vagrant about it in your Vagrantfile:
 
     config.vm.provision "shell", path: "provision.sh"
 
