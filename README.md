@@ -93,7 +93,6 @@ Modules
             tar -xjf database.tar.bz2 | mysql vagrant
         }
 
-
 Usage
 -----
 
@@ -116,7 +115,6 @@ To include modules just source them into your provisioning script (provision.sh)
 TODOs
 -----
 
-- dependency management
 - test if request works as expected
 - generalize the Request.request() function
 - complete the documentation
