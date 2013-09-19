@@ -4,13 +4,8 @@ has apache2 || {
     apt_install apache2
 
     [ -f /etc/apache2/envvars.orig ] || {
-        cp /etc/apache2/envvars /etc/apache2/envvars.orig
-
-        truncate -s 0 /etc/apache2/envvars
-        cat /etc/apache2/envvars.orig \
-            | sed 's/=www-data/=vagrant/g' \
-            >> /etc/apache2/envvars
-
+        sed -i.orig 's/=www-data/=vagrant/g' \
+            /etc/apache2/envvars
         chown -R vagrant:vagrant /var/log/apache2 /var/lock/apache2
     }
 
