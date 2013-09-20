@@ -19,7 +19,7 @@ has mysql-server-5.5 || {
 <<SQL
     CREATE DATABASE IF NOT EXISTS vagrant CHARACTER SET utf8;
     CREATE USER 'vagrant'@'localhost' IDENTIFIED BY 'vagrant';
-    GRANT USAGE ON *.* TO 'vagrant'@'localhost' IDENTIFIED BY 'vagrant'; 
+    GRANT ALL PRIVILEGES ON vagrant.* TO 'vagrant'@'localhost' IDENTIFIED BY 'vagrant';
 SQL
 
     echo '[client]'          > /home/vagrant/.my.cnf

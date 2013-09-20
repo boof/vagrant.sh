@@ -6,7 +6,8 @@ function has () {
 }
 # installs packages unattended and w/o output
 function apt_install () {
-    aptitude install -y "$@" >/dev/null 2>&1
+    echo "+ $@..."
+    aptitude install -y "$@" >/dev/null || exit 1
 }
 # configures apt to use local mirrors
 [[ -z "$NO_MIRRORS" ]] && {
@@ -31,5 +32,5 @@ touch -d '-2 days' /var/cache/apt/limit
     touch /etc/apt/sources.list
 
     echo "Updating package index..."
-    aptitude update >/dev/null 2>&1
+    aptitude update >/dev/null || exit 1
 }

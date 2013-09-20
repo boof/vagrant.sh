@@ -10,11 +10,7 @@ function includes () {
 }
 
 function provision () {
-
-    source "${DIR}/apt.sh"
-
     local module
-
     for module in $@; do
         # prevent dependency loops
         includes "${module}" $LOADED && continue
@@ -22,7 +18,7 @@ function provision () {
         # handle dependencies
         case "${module}" in
             wordpress)
-                provision apache mysql
+                MPM=prefork provision apache mysql
                 ;;
             ruby)
                 provision build
@@ -35,7 +31,6 @@ function provision () {
         LOADED+=" ${module}"
         source "${DIR}/${module}.sh"
     done
-
 }
 function set-timezone () {
     grep $1 /etc/timezone >/dev/null || {
@@ -44,4 +39,26 @@ function set-timezone () {
     }
 }
 
+# fix issues with nfs sharing
+line=`ls -n ${BASH_SOURCE[0]}`
+gid=`echo $line | cut -d ' ' -f 4`
+uid=`echo $line | cut -d ' ' -f 3`
+
+# have a real user for nfs shares
+mount -l -t nfs | grep /vagrant >/dev/null && {
+    # assign group id to group
+    cut -d ':' -f 3 /etc/group | grep $gid >/dev/null || {
+        addgroup --system --gid $gid vagrant-nfs >/dev/null
+    }
+    # assign user id to user
+    cut -d ':' -f 3 /etc/passwd | grep $uid >/dev/null || {
+        adduser --system --home /vagrant --no-create-home --shell /bin/false --uid $uid --gid $gid --disabled-password --disabled-login vagrant-nfs >/dev/null
+    }
+}
+group=`cut -d ':' -f 1,3 /etc/group | grep $gid | cut -d ':' -f 1`
+user=`cut -d ':' -f 1,3 /etc/passwd | grep $uid | cut -d ':' -f 1`
+
+update-locale LC_ALL=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+
+source "${DIR}/apt.sh"
