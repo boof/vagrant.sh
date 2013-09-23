@@ -2,8 +2,8 @@
 
 can passenger || {
     echo 'Setting up Passenger Standalone...'
-    gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
-    gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -
+    gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 >/dev/null
+    gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add - >/dev/null
 
     apt_install apt-transport-https
 
