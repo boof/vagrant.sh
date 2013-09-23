@@ -95,11 +95,13 @@ Modules
 
         - on [port] [dirname]
 
-- (**request**)
+- **request**
 
-  This module includes functions to download resources from a webserver. It will automatically download only resources that have changed after being downloaded during the last provisioning. To perform an action after a resource has been download:
+  This module includes functions to download resources from a webserver. It will automatically download only resources that have changed after being downloaded during the last provisioning.
 
-        request http://host/database.tar.bz2 || {
+  To perform an action after a resource has been download use
+
+        not-modified http://host/database.tar.bz2 || {
             tar -xjf database.tar.bz2 | mysql vagrant
         }
 
@@ -126,5 +128,4 @@ TODOs
 -----
 
 - test if request works as expected
-- generalize the Request.request() function
 - complete the documentation
