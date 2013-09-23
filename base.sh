@@ -9,6 +9,7 @@ function includes () {
   return 1
 }
 
+# loads provisioning modules and its dependencies
 function provision () {
     local module
     for module in $@; do
@@ -40,6 +41,11 @@ function set-timezone () {
         echo $1 > /etc/timezone
         dpkg-reconfigure --frontend noninteractive tzdata 2>/dev/null
     }
+}
+
+# checks if the shell supports the given command
+function can () {
+    command -v "$@" >/dev/null 2>&1
 }
 
 # fix issues with nfs sharing
