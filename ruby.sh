@@ -46,6 +46,10 @@ function install-bundle () {
     echo "Installing bundle..."
     su -c "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc test production" - vagrant
 }
+# runs rake tasts as vagrant user
+function carry-out () {
+    su -c "bundle exec rake $@ >/dev/null" - vagrant
+}
 
 # installs the ruby builder
 can ruby-build && {
