@@ -118,7 +118,7 @@ To load the modules just source the generic module into your provisioning script
 
     #!/usr/bin/env bash
 
-    source /vagrant/.sh/generic.sh
+    source /vagrant/.sh/base.sh
     set-timezone 'Europe/Berlin'
     provision modulename ...
 
