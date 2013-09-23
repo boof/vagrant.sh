@@ -26,6 +26,9 @@ function provision () {
             rack)
                 provision ruby
                 ;;
+            passenger)
+                provision ruby
+                ;;
         esac
 
         LOADED+=" ${module}"
