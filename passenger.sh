@@ -17,5 +17,9 @@ function on () {
     local port=${1:-3000}
     local directory=${2:-/vagrant}
 
-    passenger start $directory --port $port --daemonize --user $user
+    passenger status --port $port | grep 'is running' >/dev/null && {
+        touch $directory/tmp/restart.txt
+    } else {
+        passenger start $directory --port $port --daemonize --user $user
+    }
 }
