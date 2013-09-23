@@ -81,9 +81,13 @@ Modules
 
       Installs bundles gems (w/o doc and production) defined in /vagrant/Gemfile into ~/gems
 
-- rack
+- passenger
 
-  This module contains helper to provision Rack based applications.
+  This module installs the packaged passenger standalone and provides helper to start Rack applications.
+
+    - on port dirname
+
+      Starts a daemonized passenger on given port in given directory.
 
 - request
 

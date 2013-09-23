@@ -17,6 +17,5 @@ function on () {
     local port=${1:-3000}
     local directory=${2:-/vagrant}
 
-    install-bundle $directory
     passenger start $directory --port $port --daemonize --user $user
 }
