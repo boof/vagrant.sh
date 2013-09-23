@@ -26,9 +26,8 @@ SOURCES
 }
 
 # updates the package index
-touch -d '-2 days' /var/cache/apt/limit
-[ /var/cache/apt/limit -ot /etc/apt/sources.list ] || {
-    touch /etc/apt/sources.list
+[ -f /var/cache/apt/limit ] && [ /var/cache/apt/limit -nt /etc/apt/sources.list ] || {
+    touch /var/cache/apt/limit
 
     echo "Updating package index..."
     aptitude update >/dev/null || exit 1
