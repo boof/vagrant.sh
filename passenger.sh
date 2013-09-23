@@ -19,7 +19,7 @@ function on () {
 
     passenger status --port $port | grep 'is running' >/dev/null && {
         touch $directory/tmp/restart.txt
-    } else {
+    } || {
         passenger start $directory --port $port --daemonize --user $user
     }
 }
