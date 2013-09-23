@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 # build given Ruby version
-function build_ruby () {
+function __ruby () {
     echo "Building Ruby $1..."
     MAKE_OPTS=-j2 RUBY_BUILD_CACHE_PATH=$HOME/.ruby-build ruby-build $1 /usr/local/ruby-$1 >/dev/null 2>&1
 }
 
 # installs Ruby (defined in /vagrant/.ruby-version or given as parameter)
 # and modifies PATH
-function setup_ruby () {
+function set-ruby () {
     version=`cat /vagrant/.ruby-version 2>/dev/null`
     version=${1:-$version}
     [ -x /usr/local/ruby-$version/bin/ruby ] && return
 
-    build_ruby $version || {
+    __ruby $version || {
         echo "Could not install Ruby ${version}!" 1>&2
         exit 1
     }
@@ -26,22 +26,25 @@ function setup_ruby () {
 
 # checks if a gem is bundled
 function bundles () {
-    grep -o "gem ['\"]$1['\"]" /vagrant/Gemfile >/dev/null 2>&1
+    local gemfile="${1:/vagrant/Gemfile}"
+    grep -o "gem ['\"]$1['\"]" $gemfile >/dev/null 2>&1
 }
 # installs bundle from given path or /vagrant
-function install_bundles () {
+function install-bundle () {
+    local gemfile="${1:-/vagrant}/Gemfile"
+
     while :
     do
         gem install --no-ri --no-rdoc bundler >/dev/null && break
     done
 
-    bundles pg && {
+    bundles pg $gemfile && {
         provision pgsql
         apt_install libpq-dev
     }
 
     echo "Installing bundle..."
-    su -c 'bundle install --no-deployment --path=~/gems --gemfile=/vagrant/Gemfile --quiet --no-cache --without doc test production' - vagrant
+    su -c "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc test production" - vagrant
 }
 
 # installs the ruby builder

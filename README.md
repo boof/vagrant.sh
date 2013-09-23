@@ -6,9 +6,9 @@ Provisioning Helper for Vagrant. These have been tested only on the vanilla prec
 Modules
 -------
 
-- generic
+- base
 
-  The Generic module will set LC_ALL to en_US.UTF-8 and the when it's loaded
+  The Base module will set LC_ALL to en_US.UTF-8 and the when it's loaded
 
         provision modulename ...
 
@@ -52,8 +52,8 @@ Modules
 
   To build a not already built Ruby you have to add one of the following lines into your provisioning script after you included the ruby module.
 
-        setup_ruby 2.0.0-p247 # or
-        setup_ruby # will use /vagrant/.ruby-version
+        set-ruby 2.0.0-p247 # or
+        set-ruby # will use /vagrant/.ruby-version
 
   It works best across multiple boxes if you sync the cache folder via NFS.
 
@@ -65,19 +65,19 @@ Modules
 
   Functions included are:
 
-    - build_ruby version
+    - __ruby version
 
       Builds a ruby version unconditionally and installs it into /usr/local.
 
-    - setup_ruby [version]
+    - set-ruby [version]
 
       Builds a non-existing ruby version and modifies the PATH globally.
 
-    - bundles gemname
+    - bundles gemname [Gemfile]
 
       Checks if a gem is present in /vagrant/Gemfile.lock.
 
-    - install_bundles
+    - install-bundle [path/to/Gemfile]
 
       Installs bundles gems (w/o doc and production) defined in /vagrant/Gemfile into ~/gems
 
@@ -89,7 +89,7 @@ Modules
 
   This module includes functions to download resources from a webserver. It will automatically download only resources that have changed after being downloaded during the last provisioning. To perform an action after a resource has been download:
 
-        request database.tar.bz2 && {
+        request http://host/database.tar.bz2 || {
             tar -xjf database.tar.bz2 | mysql vagrant
         }
 
