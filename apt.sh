@@ -23,7 +23,6 @@ deb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted uni
 SOURCES
 
     echo "$APT_SOURCES" > /etc/apt/sources.list
-    touch -d '-3 days' /etc/apt/sources.list
 }
 
 # updates the package index
