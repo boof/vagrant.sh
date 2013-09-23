@@ -22,9 +22,8 @@ Modules
 
 - **apt**
 
-  This module updates the package cache every two days or when the /etc/apt/sources.list hase been changed.
-
-  By default it also overwrites the sources to use mirrors.
+  This module updates the package cache every two days or when the /etc/apt/sources.list has been changed.
+  By default it also overwrites the sources to use mirrors, set `NO_MIRRORS=1` to prevent this from happending.
 
   After the module has been loaded you can check if a package is installed
 
