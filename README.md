@@ -91,9 +91,9 @@ Modules
 
   This module installs the packaged passenger standalone and provides helper to start Rack applications.
 
-    - on port dirname
+  Start a daemonized passenger on given port in given directory (defaults to port 3000 and and /vagrant).
 
-      Starts a daemonized passenger on given port in given directory.
+        - on [port] [dirname]
 
 - (**request**)
 
