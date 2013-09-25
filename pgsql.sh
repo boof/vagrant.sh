@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+provision apt
+
 # setup postgresql to work well with vagrant
 has postgresql-9.1 || {
     echo "Setting up PostgreSQL server..."
