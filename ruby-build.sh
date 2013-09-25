@@ -21,12 +21,18 @@ function set-ruby () {
         echo "Could not install Ruby ${version}!" 1>&2
         exit 1
     }
-    update-alternatives --set ruby /usr/local/ruby-$version/bin/ruby >/dev/null
 
     echo "export PATH=/usr/local/ruby-$version/bin:\$PATH" \
         | install --backup=none /dev/stdin /etc/profile.d/ruby.sh
 
     . /etc/profile.d/ruby.sh
+
+    update-alternatives --install /usr/bin/ruby ruby /usr/local/ruby-$version/bin/ruby 500 \
+        --slave /usr/share/man/man1/ruby.1 ruby.1 /usr/local/ruby-$version/share/man/man1/ruby.1 \
+        --slave /usr/bin/ri ri /usr/local/ruby-$version/bin/ri \
+        --slave /usr/bin/irb irb /usr/local/ruby-$version/bin/irb
+
+    update-alternatives --set ruby /usr/local/ruby-$version/bin/ruby >/dev/null
 }
 
 # checks if a gem is bundled
