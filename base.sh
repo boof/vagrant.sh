@@ -8,6 +8,9 @@ function includes () {
   for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
   return 1
 }
+function provides () {
+    LOADED+=" $@"
+}
 
 # loads provisioning modules and its dependencies
 function provision () {
