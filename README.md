@@ -63,7 +63,7 @@ Modules
 
   Install bundled gems (w/o doc and production) defined in /vagrant/Gemfile into ~/gems.
 
-        install-bundle [path/to/Gemfile]
+        install-bundle [path/to/Gemfile/directory/]
 
   Run rake tasts as vagrant user.
 
