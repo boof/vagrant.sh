@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+MPM=prefork provision apt apache mysql
+
 config=`find /vagrant -name 'wp-config' -print -quit`
 if [[ -z "$config" ]]; then
     echo "Deploying WordPress installation..."

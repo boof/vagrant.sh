@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+provision apt
+
 has build-essential || apt_install build-essential
 
 # installs compiler cache

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+provision apt ruby
+
 can passenger || {
     echo 'Setting up Passenger Standalone...'
     gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 >/dev/null

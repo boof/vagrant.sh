@@ -16,22 +16,6 @@ function provision () {
         # prevent dependency loops
         includes "${module}" $LOADED && continue
 
-        # handle dependencies
-        case "${module}" in
-            wordpress)
-                MPM=prefork provision apache mysql
-                ;;
-            ruby)
-                provision build
-                ;;
-            rack)
-                provision ruby
-                ;;
-            passenger)
-                provision ruby
-                ;;
-        esac
-
         LOADED+=" ${module}"
         source "${DIR}/${module}.sh"
     done
@@ -69,5 +53,3 @@ user=`cut -d ':' -f 1,3 /etc/passwd | grep $uid | cut -d ':' -f 1`
 
 update-locale LC_ALL=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
-source "${DIR}/apt.sh"

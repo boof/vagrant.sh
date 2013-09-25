@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+provision apt
+
 # setup mysql-server to work well with vagrant
 has mysql-server-5.5 || {
     echo "Setting up MySQL server..."
