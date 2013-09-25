@@ -41,21 +41,23 @@ Modules
 
   This modules sets up MySQL and creates a vagrant user and database.
 
+- **mongo**
+
+  This modules sets up MongoDB.
+
 - **wordpress**
 
   This module sets up WordPress.
 
 - **ruby**
 
-  This module will help you installing Rubies. It will installs the ruby-build standalone and setup ccache to speed up compilation time when it's loaded.
-
-  Build a ruby version unconditionally and installs it into /usr/local.
-
-        __ruby version
-
-  Build a non-existing ruby version and modifies the PATH globally.
+  This module provides helper for installing rubies provided by Ubuntu.
 
         set-ruby [version]
+
+- **ruby-essential**
+
+  This module provides helper for installing bundles and executing rake tasks.
 
   Check if a gem is present in /vagrant/Gemfile.lock.
 
@@ -68,6 +70,18 @@ Modules
   Run rake tasts as vagrant user.
 
         carry-out [tasks]
+
+- **ruby-build**
+
+  This module provides ruby and will help you installing Rubies. It will installs the ruby-build standalone and setup ccache to speed up compilation time when it's loaded.
+
+  Build a ruby version unconditionally and installs it into /usr/local.
+
+        __ruby version
+
+  Build a non-existing ruby version and modifies the PATH globally.
+
+        set-ruby [version]
 
   ### Install and setup a Ruby
 
