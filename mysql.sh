@@ -10,7 +10,7 @@ has mysql-server-5.5 || {
         | debconf-set-selections
     echo 'mysql-server-5.5 mysql-server/root_password_again password root' \
         | debconf-set-selections
-    apt_install mysql-server-5.5
+    apt-install mysql-server-5.5
 
     echo '[client]'       > ~/.my.cnf
     echo 'user=root'     >> ~/.my.cnf

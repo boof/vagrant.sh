@@ -46,7 +46,7 @@ echo "Configuring WordPress installation..."
 # setup apache to work with WordPress
 has libapache2-mod-php5 php5-mysql php5-gd || {
     echo "Setting up WordPress requirements..."
-    apt_install libapache2-mod-php5 php5-mysql php5-gd
+    apt-install libapache2-mod-php5 php5-mysql php5-gd
 
     site=/etc/apache2/sites-available/default
     [ -f $site.orig ] || {

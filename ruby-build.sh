@@ -35,48 +35,23 @@ function set-ruby () {
     update-alternatives --set ruby /usr/local/ruby-$version/bin/ruby >/dev/null
 }
 
-# checks if a gem is bundled
-function bundles () {
-    local gemfile="${1:/vagrant/Gemfile}"
-    grep -o "gem ['\"]$1['\"]" $gemfile >/dev/null 2>&1
-}
-# installs bundle from given path or /vagrant
-function install-bundle () {
-    local gemfile="${1:-/vagrant}/Gemfile"
-
-    while :
-    do
-        gem install --no-ri --no-rdoc bundler >/dev/null && break
-    done
-
-    bundles pg $gemfile && {
-        provision pgsql
-        apt_install libpq-dev
-    }
-
-    echo "Installing bundle..."
-    su -c "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc test production" - vagrant
-}
-# runs rake tasts as vagrant user
-function carry-out () {
-    su -c "bundle exec rake $@ >/dev/null" - vagrant
-}
-
 # installs or updates the ruby builder
 can ruby-build && {
     # TODO update ruby-build
     cd /usr/local/src/ruby-build
-    git remote update
+    git remote update >/dev/null
     # git status -suno || {
     #     git pull --rebase
     #     ./install.sh >/dev/null
     # }
 } || {
     echo "Installing Ruby builder..."
-    apt_install git
+    apt-install git
 
     cd /usr/local/src
     git clone https://github.com/sstephenson/ruby-build.git >/dev/null
     cd ruby-build
     ./install.sh >/dev/null
 }
+
+provision ruby-essential

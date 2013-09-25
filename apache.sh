@@ -3,7 +3,7 @@ function setup_apache () {
     local mpm=${1:-worker}
     has apache2-mpm-$mpm || {
         echo "Setting up Apache HTTP server... "
-        apt_install apache2-mpm-$mpm
+        apt-install apache2-mpm-$mpm
 
         [ -f /etc/apache2/envvars.orig ] || {
             sed -i.orig "s/USER=www-data/USER=${user}/;s/GROUP=www-data/GROUP=${group}/" \
