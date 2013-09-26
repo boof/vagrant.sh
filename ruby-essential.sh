@@ -26,12 +26,13 @@ function install-bundle () {
         || apt-install libcurl4-openssl-dev
     }
     bundles nokogiri $gemfile && {
+        # FIXME conditional logic not working...
         has libxslt-dev && has libxml2-dev \
         || apt-install libxslt-dev libxml2-dev
     }
 
     echo "Installing bundle..."
-    su -c "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc test production" - vagrant
+    su -c "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc production" - vagrant
 }
 # runs rake tasts as vagrant user
 function carry-out () {
