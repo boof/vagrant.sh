@@ -107,7 +107,7 @@ Modules
 
   Start a daemonized passenger on given port in given directory (defaults to port 3000 and and /vagrant).
 
-        - on [port] [dirname]
+        on [port] [dirname]
 
 - **request**
 
