@@ -3,6 +3,10 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOADED="generic"
 
+function as () {
+    su -c $2 - $1
+}
+
 function includes () {
   local e
   for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
