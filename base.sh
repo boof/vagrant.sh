@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOADED="generic"
 
 function as () {
-    su -c $2 - $1
+    su --command "$2" --login $1
 }
 
 function includes () {
