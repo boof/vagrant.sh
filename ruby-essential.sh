@@ -36,6 +36,6 @@ function install-bundle () {
 }
 # runs rake tasts as vagrant user
 function carry-out () {
-    local arguments=$@
-    as vagrant "bundle exec rake ${arguments} >/dev/null"
+    local gemfile="${2:-/vagrant}/Gemfile"
+    as vagrant "bundle exec --gemfile=${gemfile} rake $1 >/dev/null"
 }
