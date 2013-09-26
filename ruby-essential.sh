@@ -27,14 +27,15 @@ function install-bundle () {
     }
     bundles nokogiri $gemfile && {
         # FIXME conditional logic not working...
-        has libxslt-dev && has libxml2-dev \
-        || apt-install libxslt-dev libxml2-dev
+        has libxslt1-dev && has libxml2-dev \
+        || apt-install libxslt1-dev libxml2-dev
     }
 
     echo "Installing bundle..."
-    su -c "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc production" - vagrant
+    as vagrant "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
 }
 # runs rake tasts as vagrant user
 function carry-out () {
-    su -c "bundle exec rake $@ >/dev/null" - vagrant
+    local arguments=$@
+    as vagrant "bundle exec rake ${arguments} >/dev/null"
 }
