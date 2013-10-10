@@ -2,7 +2,7 @@
 
 provision apt ruby
 
-can passenger || {
+function install-passenger () {
     echo 'Setting up Passenger Standalone...'
     gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 >/dev/null
     gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add - >/dev/null
@@ -17,11 +17,18 @@ can passenger || {
 
 function on () {
     local port=${1:-3000}
-    local directory=${2:-/vagrant}
+    local directory=`readlink -f ${2:-/vagrant}`
+    local pidfile="${directory}/tmp/pids/passenger.${port}.pid"
+    local logfile="${directory}/log/passenger.${port}.log"
 
-    passenger status --port $port | grep 'is running' >/dev/null && {
+    can passenger || install-passenger
+    # install-bundle $directory
+
+    passenger status --pid-file "${pidfile}" | grep 'is running' >/dev/null && {
         touch $directory/tmp/restart.txt
     } || {
-        passenger start $directory --port $port --daemonize --user $user
+        passenger start "${directory}" --daemonize \
+            --pid-file "${pidfile}" --log-file "${logfile}" \
+            --port $port --user $user
     }
 }
