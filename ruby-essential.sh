@@ -26,9 +26,16 @@ function install-bundle () {
         || apt-install libcurl4-openssl-dev
     }
     bundles nokogiri $gemfile && {
-        # FIXME conditional logic not working...
-        has libxslt1-dev && has libxml2-dev \
-        || apt-install libxslt1-dev libxml2-dev
+        has libxslt-dev && has libxml2-dev \
+        || apt-install libxslt-dev libxml2-dev
+    }
+    bundles rmagick $gemfile && {
+        has libmagickwand-dev \
+        || apt-install libmagickwand-dev
+    }
+    bundles sqlite3 $gemfile && {
+        has libsqlite3-dev \
+        || apt-install libsqlite3-dev
     }
 
     echo "Installing bundle..."
