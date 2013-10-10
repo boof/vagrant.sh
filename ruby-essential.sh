@@ -4,12 +4,12 @@ provision ruby
 
 # checks if a gem is bundled
 function bundles () {
-    local gemfile="${2:-/vagrant/Gemfile}"
-    grep -o "gem ['\"]${1}['\"]" $gemfile >/dev/null 2>&1
+    local lockfile=`readlink -f "${2:-/vagrant/Gemfile}.lock"`
+    grep -o " ${1}[ $]" $lockfile >/dev/null 2>&1
 }
 # installs bundle from given path or /vagrant
 function install-bundle () {
-    local gemfile="${1:-/vagrant}/Gemfile"
+    local gemfile=`readlink -f "${1:-/vagrant}/Gemfile"`
 
     while :
     do
@@ -36,6 +36,6 @@ function install-bundle () {
 }
 # runs rake tasts as vagrant user
 function carry-out () {
-    local gemfile="${2:-/vagrant}/Gemfile"
+    local gemfile=`readlink -f "${2:-/vagrant}/Gemfile"`
     as vagrant "bundle exec --gemfile=${gemfile} rake $1 >/dev/null"
 }
