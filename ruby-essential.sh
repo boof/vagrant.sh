@@ -13,7 +13,7 @@ function install-bundle () {
 
     while :
     do
-        gem install --no-ri --no-rdoc bundler >/dev/null && break
+        can bundle && break || gem install --no-ri --no-rdoc bundler >/dev/null
     done
 
     bundles pg $gemfile && {
