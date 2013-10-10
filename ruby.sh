@@ -14,8 +14,15 @@ function set-ruby () {
 		version=1.9.1
 	fi
 
-	apt-install ruby$version
+	apt-install \
+		ruby$version \
+		ruby$version-dev \
+		libreadline-ruby$version \
+		libruby$version \
+		libopenssl-ruby
+
 	update-alternatives --set ruby /usr/bin/ruby$version >/dev/null
+	update-alternatives --set gem /usr/bin/gem$version >/dev/null
 }
 
 provision ruby-essential
