@@ -6,7 +6,8 @@ function mtime () {
 }
 # converts a date into the HTTP date format
 function httpdate () {
-    date --date=$1 +'%a, %e %b %Y %T GMT'
+    local human_readable_date=`echo "$*"`
+    date --date="${human_readable_date}" +'%a, %e %b %Y %T GMT'
 }
 # downloads a resource if the resource is newer than the local file or the
 # local file does not exist
@@ -14,9 +15,7 @@ function not-modified () {
     local bn=`basename $1`
     if [ -r "$bn" ]; then
         local date=`httpdate $(mtime $bn)`
-
-        wget --quiet --no-http-keep-alive --output-document=$bn.download --header="If-Modified-Since: $date" $1 \
-            && mv $bn.download $bn
+        wget --quiet --no-http-keep-alive --output-document=$bn --header="If-Modified-Since: $date" $1
     else
         wget --quiet --no-http-keep-alive --output-document=$bn $1
     fi
