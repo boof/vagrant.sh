@@ -4,7 +4,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOADED="generic"
 
 function as () {
-    su --command "$2" --login $1
+    local login=$1
+    shift
+    local command=`echo "$*"`
+    su --command "${command}" --login ${login}
 }
 
 function includes () {
