@@ -24,7 +24,7 @@ has postgresql-9.1 || {
 
 	local search='local   all             all                                     peer'
 	local replace='local   all             all                                     trust'
-	local search_and_replace="s/${ search }/${ replace }/"
+	local search_and_replace="s/${search}/${replace}/"
 
-	sed -i $search_and_replace /etc/postgresql/9.1/main/pg_hba.conf
+	sed -i "${search_and_replace}" /etc/postgresql/9.1/main/pg_hba.conf
 }
