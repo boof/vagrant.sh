@@ -43,6 +43,19 @@ function install-bundle () {
 }
 # runs rake tasts as vagrant user
 function carry-out () {
-    local gemfile=`readlink -f "${2:-/vagrant}/Gemfile"`
-    as vagrant "bundle exec --gemfile=${gemfile} rake $1 >/dev/null"
+    local directory=`pwd`
+
+    while getopts "at:" flag
+    do
+        case "${flag}" in
+            at)
+                directory=$OPTARG
+                ;;
+        esac
+    done
+
+    gemfile=`readlink -f "${directory}/Gemfile"`
+    rakefile=`readlink -f "${directory}/Rakefile"`
+
+    as vagrant "BUNDLE_GEMFILE=${gemfile} bundle exec rake -f${rakefile} $@"
 }
