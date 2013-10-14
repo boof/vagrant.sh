@@ -39,7 +39,7 @@ function install-bundle () {
     }
 
     echo "Installing bundle..."
-    as vagrant "bundle install --no-deployment --path=~/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
+    as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
 }
 # runs rake tasts as vagrant user
 function carry-out () {
