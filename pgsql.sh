@@ -27,4 +27,5 @@ has postgresql-9.1 || {
 	local search_and_replace="s/${search}/${replace}/"
 
 	sed -i "${search_and_replace}" /etc/postgresql/9.1/main/pg_hba.conf
+	service postgresql reload >/dev/null
 }
