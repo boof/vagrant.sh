@@ -8,13 +8,24 @@ Modules
 
 - **base**
 
-  The Base module will set LC\_ALL to en\_US.UTF-8 and the after it has been loaded
+  The Base module will set LC\_ALL to en\_US.UTF-8 and the after it has been loaded.
+  It'll also fix NFS issues for you (it creates a vagrant-nfs user).
+
+  To load a module
 
         provision modulename ...
 
   You can also set the timezone with
 
         set-timezone timezone
+
+  To run a command as another user
+
+        as vagrant "command ..."
+
+  To check if the system supports a command
+
+        can command || apt-install something
 
 - **build**
 
@@ -31,7 +42,7 @@ Modules
 
   You can also install package(s) unattended
 
-        apt_install packagename ...
+        apt-install packagename ...
 
 - **pgsql**
 
@@ -47,13 +58,15 @@ Modules
 
 - **wordpress**
 
-  This module sets up WordPress.
+  This module sets up (deploys to in /vagrant/wordpress if no wp-config.php can be found) WordPress.
 
 - **ruby**
 
   This module provides helper for installing rubies provided by Ubuntu.
 
         set-ruby [version]
+
+  Note: *For MRI versions below 1.9 the ruby1.8 packages will be installed. Right now this is 1.8.7. For MRIs after 1.9 the package installed is 1.9.1 which maps to Ruby 1.9.3*
 
 - **ruby-essential**
 
@@ -141,5 +154,5 @@ To load the modules just source the generic module into your provisioning script
 TODOs
 -----
 
-- test if request works as expected
-- complete the documentation
+- keep the documentation up to date...
+- apt-install only if has fails
