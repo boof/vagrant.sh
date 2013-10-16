@@ -17,33 +17,39 @@ function install-bundle () {
     done
 
     bundles pg $gemfile && {
-        provision pgsql
-        has libpq-dev \
-        || apt-install libpq-dev
+        provision build pgsql
+        has libpq-dev ||
+        apt-install libpq-dev
     }
     bundles curb $gemfile && {
-        has libcurl4-openssl-dev \
-        || apt-install libcurl4-openssl-dev
+        provision build
+        has libcurl4-openssl-dev ||
+        apt-install libcurl4-openssl-dev
     }
     bundles nokogiri $gemfile && {
-        has libxslt-dev && has libxml2-dev \
-        || apt-install libxslt-dev libxml2-dev
+        provision build
+        has libxslt1.1 && has libxml2-dev ||
+        apt-install libxslt1.1 libxml2-dev
     }
     bundles rmagick $gemfile && {
-        has libmagickwand-dev \
-        || apt-install libmagickwand-dev
+        provision build
+        has libmagickwand-dev ||
+        apt-install libmagickwand-dev
     }
     bundles sqlite3 $gemfile && {
-        has libsqlite3-dev \
-        || apt-install libsqlite3-dev
+        provision build
+        has libsqlite3-dev ||
+        apt-install libsqlite3-dev
     }
     bundles resque $gemfile && {
-        has redis-server \
-        || apt-install redis-server
+        has redis-server ||
+        apt-install redis-server
     }
 
-    echo "Installing bundle..."
-    as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
+    bundle check >/dev/null || {
+        echo "Installing bundle..."
+        as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
+    }
 }
 # runs rake tasts as vagrant user
 function carry-out () {
