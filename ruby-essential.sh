@@ -37,6 +37,10 @@ function install-bundle () {
         has libsqlite3-dev \
         || apt-install libsqlite3-dev
     }
+    bundles resque $gemfile && {
+        has redis-server \
+        || apt-install redis-server
+    }
 
     echo "Installing bundle..."
     as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
