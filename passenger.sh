@@ -27,7 +27,7 @@ function on () {
     passenger status --pid-file "${pidfile}" | grep 'is running' >/dev/null && {
         touch $directory/tmp/restart.txt
     } || {
-        passenger start "${directory}" --daemonize \
+        bundle exec passenger start "${directory}" --daemonize \
             --pid-file "${pidfile}" --log-file "${logfile}" \
             --port $port --user $user
     }
