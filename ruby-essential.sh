@@ -28,8 +28,8 @@ function install-bundle () {
     }
     bundles nokogiri $gemfile && {
         provision build
-        has libxslt1.1 && has libxml2-dev ||
-        apt-install libxslt1.1 libxml2-dev
+        has libxslt1-dev && has libxml2-dev ||
+        apt-install libxslt1-dev libxml2-dev
     }
     bundles rmagick $gemfile && {
         provision build
