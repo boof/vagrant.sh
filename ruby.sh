@@ -19,6 +19,7 @@ function set-ruby () {
 			ruby$version \
 			ruby$version-dev \
 			libreadline-ruby$version \
+			rubygems$version \
 			libruby$version \
 			libopenssl-ruby
 
