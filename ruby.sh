@@ -39,6 +39,12 @@ function set-ruby () {
 		update-alternatives --set ruby /usr/bin/ruby$version >/dev/null
 		update-alternatives --set gem /usr/bin/gem$version >/dev/null
 	}
+
+
+	while :
+	do
+	    can bundle && break || gem install --no-ri --no-rdoc bundler >/dev/null
+	done
 }
 
 provision ruby-essential
