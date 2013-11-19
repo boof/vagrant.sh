@@ -10,6 +10,10 @@ function setup_apache () {
                 /etc/apache2/envvars
             chown -R $user:$group /var/log/apache2 /var/lock/apache2
         }
+        # suppress warnings
+        [ -f /etc/apache2/conf.d/hostname ] || {
+            echo "ServerName vagrant" > /etc/apache2/conf.d/hostname
+        }
 
         rm -rf /var/www
         ln -sf /vagrant /var/www

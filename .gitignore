@@ -1,0 +1,7 @@
+test/wordpress/*
+wordpress/*
+tmp/*
+log/*
+.vagrant/*
+.sh
+public/*

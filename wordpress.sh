@@ -33,8 +33,8 @@ if [[ -z "$config" ]]; then
     rm -r $TMPDIR
 fi
 
-echo "Configuring WordPress installation..."
 [ -f "${config}.orig" ] || {
+    echo "Configuring WordPress installation..."
     cp $config $config.orig
     sed -ri "s/\('DB_NAME',[^)]+\)/('DB_NAME', 'vagrant')/" $config
     sed -ri "s/\('DB_USER',[^)]+\)/('DB_USER', 'vagrant')/" $config
@@ -55,6 +55,6 @@ has libapache2-mod-php5 php5-mysql php5-gd || {
         sed -i 's/AllowOverride None/AllowOverride FileInfo Options/g' $site
     }
     a2enmod rewrite >/dev/null
-
-    service apache2 restart >/dev/null
 }
+
+service apache2 restart >/dev/null
