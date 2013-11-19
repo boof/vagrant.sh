@@ -2,6 +2,19 @@
 
 provision apt
 
+function install-passenger () {
+    echo 'Setting up Passenger Standalone...'
+    gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 >/dev/null
+    gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add - >/dev/null
+
+    apt-install apt-transport-https
+
+    echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger precise main' > /etc/apt/sources.list.d/passenger.list
+    aptitude update >/dev/null || exit 1
+
+    apt-install passenger
+}
+
 # installs Ruby (defined in /vagrant/.ruby-version or given as parameter)
 # and modifies PATH
 function set-ruby () {

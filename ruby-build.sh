@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# This module provides build facilities for ruby, rubygems and passenger.
+# Author: Florian Aßmann <florian.assmann@email.de>
 
 provides ruby
 provision build
@@ -33,6 +35,12 @@ function set-ruby () {
         --slave /usr/bin/irb irb /usr/local/ruby-$version/bin/irb
 
     update-alternatives --set ruby /usr/local/ruby-$version/bin/ruby >/dev/null
+
+    # TODO do this for rubygems, too
+}
+
+function install-passenger () {
+    # TODO add support for passenger gem
 }
 
 # installs or updates the ruby builder

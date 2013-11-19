@@ -2,6 +2,11 @@
 
 provision ruby
 
+while :
+do
+    can bundle && break || gem install --no-ri --no-rdoc bundler >/dev/null
+done
+
 # checks if a gem is bundled
 function bundles () {
     local lockfile=`readlink -f "${2:-/vagrant/Gemfile}.lock"`
@@ -10,11 +15,6 @@ function bundles () {
 # installs bundle from given path or /vagrant
 function install-bundle () {
     local gemfile=`readlink -f "${1:-/vagrant}/Gemfile"`
-
-    while :
-    do
-        can bundle && break || gem install --no-ri --no-rdoc bundler >/dev/null
-    done
 
     bundles pg $gemfile && {
         provision build pgsql
