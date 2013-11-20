@@ -6,8 +6,8 @@ LOADED="generic"
 function as () {
     local login=$1
     shift
-    local command=`echo "$*"`
-    su --command "${command}" --login ${login}
+    local cmd=`echo "$*"`
+    su -c "${cmd}" ${login}
 }
 
 function includes () {
