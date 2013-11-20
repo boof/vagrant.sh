@@ -41,9 +41,9 @@ function install-bundle () {
         apt-install redis-server
     }
 
-    bundle check >/dev/null || {
-        echo "Installing bundle..."
-        as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --quiet --no-cache --without doc production"
+    as vagrant 'bundle check' >/dev/null || {
+        echo "Installing bundle from ${gemfile}..."
+        as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --no-cache --without doc production"
     }
 }
 # runs rake tasts as vagrant user
