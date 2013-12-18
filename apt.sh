@@ -2,7 +2,7 @@
 
 # checks if a package is installed
 function has () {
-    dpkg -s "$1" >/dev/null 2>&1
+    dpkg -s "$1" | grep 'Status: install ok installed' >/dev/null 2>&1
 }
 
 function apt_install () {
