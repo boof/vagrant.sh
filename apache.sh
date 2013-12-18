@@ -1,6 +1,12 @@
+#!/usr/bin/env bash
+
+provision apt
+
 # setup apache to work well with vagrant
-function setup_apache () {
+function setup-apache () {
     local mpm=${1:-worker}
+    local docroot=${2:-/vagrant/public}
+
     has apache2-mpm-$mpm || {
         echo "Setting up Apache HTTP server... "
         apt-install apache2-mpm-$mpm
@@ -16,10 +22,16 @@ function setup_apache () {
         }
 
         rm -rf /var/www
-        ln -sf /vagrant /var/www
+        [ -d $docroot ] && mkdir -p $docroot
+        ln -sf $docroot /var/www
 
         service apache2 restart >/dev/null
     }
 }
 
-[[ -z "${MPM}" ]] || setup_apache $MPM
+function setup_apache () {
+    echo "setup_apache is deprecated, use setup-apache instead." >&2
+    setup-apache $@
+}
+
+[[ -z "${MPM}" ]] || setup-apache $MPM
