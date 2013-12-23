@@ -9,7 +9,7 @@ Modules
 - **base**
 
   The Base module will set LC\_ALL to en\_US.UTF-8 and the after it has been loaded.
-  It'll also fix NFS issues for you (it creates a vagrant-nfs user).
+  It'll also fix NFS issues for you (it creates a vagrant-nfs user) and delete existing bash history.
 
   To load a module
 
@@ -26,6 +26,10 @@ Modules
   To check if the system supports a command
 
         can command || apt-install something
+
+  To set the directory which you'll enter after `vagrant ssh`
+
+        redir ${1:-/vagrant}
 
 - **build**
 
@@ -56,6 +60,18 @@ Modules
 
   This modules sets up MongoDB.
 
+- **apache**
+
+  This module provides provides helper to install and configure apache.
+
+  To install Apache
+
+        setup-apache [mpm(=worker)] [DocumentRoot(=/vagrant/public)]
+
+  To change the DocumentRoot
+
+        set-docroot [directory]
+
 - **wordpress**
 
   This module sets up (deploys to in /vagrant/wordpress if no wp-config.php can be found) WordPress.
@@ -83,36 +99,6 @@ Modules
   Run rake tasts as vagrant user.
 
         carry-out [tasks]
-
-- **ruby-build**
-
-  This module provides ruby and will help you installing Rubies. It will installs the ruby-build standalone and setup ccache to speed up compilation time when it's loaded.
-
-  Build a ruby version unconditionally and installs it into /usr/local.
-
-        __ruby version
-
-  Build a non-existing ruby version and modifies the PATH globally.
-
-        set-ruby [version]
-
-  ### Install and setup a Ruby
-
-  To build a not already built Ruby you have to add one of the following lines into your provisioning script after you included the ruby module.
-
-        set-ruby 2.0.0-p247 # or
-        set-ruby # will use /vagrant/.ruby-version
-
-  ### Speed-Up build times
-
-  It works best across multiple boxes if you sync the cache folder via NFS.
-
-        config.vm.synced_folder '~/.ccache', "/home/vagrant/.ccache", nfs: true, create: true
-
-  It is also a good practice to share a RUBY_BUILD_CACHE_PATH across machines.
-
-        config.vm.synced_folder ~/.ruby-build, "/home/vagrant/.ruby-build", nfs: true, create: true
-
 
 - **passenger**
 
