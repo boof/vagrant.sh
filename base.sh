@@ -42,6 +42,16 @@ function can () {
     command -v "$@" >/dev/null 2>&1
 }
 
+function redir () {
+    as vagrant "echo ${1:-/vagrant} > /home/vagrant/.redir"
+}
+function setup-redir () {
+    local cmd='[ -f /home/vagrant/.redir ] && cd `cat .redir`'
+    local profile=/home/vagrant/.profile
+    grep -q "$cmd" $profile || echo $cmd >> $profile
+}
+setup-redir
+
 # fix issues with nfs sharing
 line=`ls -n ${BASH_SOURCE[0]}`
 gid=`echo $line | cut -d ' ' -f 4`
@@ -63,3 +73,5 @@ user=`cut -d ':' -f 1,3 /etc/passwd | grep $uid | cut -d ':' -f 1`
 
 update-locale LC_ALL=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+
+rm --force /home/vagrant/.bash_history

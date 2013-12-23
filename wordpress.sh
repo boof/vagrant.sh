@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MPM=prefork provision apt apache mysql
+provision apache mysql
 
 config=`find /vagrant -name 'wp-config.php' -print -quit`
 if [[ -z "$config" ]]; then
@@ -43,17 +43,15 @@ fi
     sed -ri "s/\('DB_CHARSET',[^)]+\)/('DB_CHARSET', 'utf8')/" $config
 }
 
+setup-apache prefork $(dirname $config)
+
 # setup apache to work with WordPress
 has libapache2-mod-php5 php5-mysql php5-gd || {
     echo "Setting up WordPress requirements..."
     apt-install libapache2-mod-php5 php5-mysql php5-gd
 
     site=/etc/apache2/sites-available/default
-    [ -f $site.orig ] || {
-        cp $site $site.orig
-        sed -i "s/\/var\/www/$(dirname $config | sed -e 's/[]\/()$*.^|[]/\\&/g')/g" $site
-        sed -i 's/AllowOverride None/AllowOverride FileInfo Options/g' $site
-    }
+    [ -f $site.orig ] || sed -i.orig 's/AllowOverride None/AllowOverride FileInfo Options/g' $site
     a2enmod rewrite >/dev/null
 }
 

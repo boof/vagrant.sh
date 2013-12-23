@@ -20,6 +20,7 @@ function on () {
             --port $port --user $user"
 
         # TODO create service
+        # http://stackoverflow.com/questions/5489889/how-can-i-keep-a-passenger-standalone-up-even-after-a-restart
         if [ -e $directory/Gemfile ];
         then
             install-bundle $directory
