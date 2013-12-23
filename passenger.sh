@@ -24,7 +24,7 @@ function on () {
         if [ -e $directory/Gemfile ];
         then
             install-bundle $directory
-            GEMFILE=$directory/Gemfile bundle exec $start && return 0
+            BUNDLE_GEMFILE=$directory/Gemfile bundle exec $start && return 0
         else
             $start && return 0
         fi
