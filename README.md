@@ -29,7 +29,7 @@ Modules
 
   To set the directory which you'll enter after `vagrant ssh`
 
-        redir ${1:-/vagrant}
+        redir [directory(=/vagrant)]
 
 - **build**
 
@@ -106,7 +106,7 @@ Modules
 
   Start a daemonized passenger on given port in given directory (defaults to port 3000 and and /vagrant).
 
-        on [port] [dirname]
+        on [port(=3000)] [directory(=/vagrant)]
 
 - **request**
 
