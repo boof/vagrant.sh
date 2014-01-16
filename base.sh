@@ -68,6 +68,7 @@ mount -l -t nfs | grep /vagrant >/dev/null && {
         adduser --system --home /vagrant --no-create-home --shell /bin/false --uid $uid --gid $gid --disabled-password --disabled-login vagrant-nfs >/dev/null
     }
 }
+
 group=`cut -d ':' -f 1,3 /etc/group | grep $gid | cut -d ':' -f 1`
 user=`cut -d ':' -f 1,3 /etc/passwd | grep $uid | cut -d ':' -f 1`
 
