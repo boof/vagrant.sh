@@ -1,4 +1,4 @@
-worker_processes 4
+worker_processes 3
 
 working_directory "/vagrant"
 
