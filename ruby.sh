@@ -19,6 +19,7 @@ function rackup-on () {
 
     # create directory
     [ -d /var/run/unicorn ] || mkdir /var/run/unicorn
+    chown -R $user:$group /var/run/unicorn
 
     # (re)start unicorn
     local pidfile=`grep -P '^pid ' $config | cut -d ' ' -f 2 | sed "s/^\([\"']\)\(.*\)\1\$/\2/g"`
@@ -32,9 +33,9 @@ function rackup-on () {
         if [ -e $directory/Gemfile ];
         then
             install-bundle $directory
-            BUNDLE_GEMFILE=$directory/Gemfile bundle exec $start && return 0
+            BUNDLE_GEMFILE=$directory/Gemfile as $user "bundle exec $start" && return 0
         else
-            $start && return 0
+            as $user $start && return 0
         fi
     }
 }
