@@ -20,6 +20,7 @@ function create-db () {
 has postgresql-9.1 || {
 	echo "Setting up PostgreSQL server..."
 	apt-install postgresql-9.1 postgresql-contrib-9.1
+	includes "build" $LOADED && apt-install postgresql-server-dev-9.1
 
 	create-db-user vagrant
 	create-db vagrant
