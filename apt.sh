@@ -10,6 +10,13 @@ function apt-install () {
     echo "+ $@"
     aptitude install -y "$@" >/dev/null || exit 1
 }
+
+function apt-update () {
+    echo "Updating package index..."
+    touch /var/cache/apt/limit
+    apt-get update >/dev/null || exit 1
+}
+
 # configures apt to use local mirrors
 [[ -z "$NO_MIRRORS" ]] && {
     [ -e /etc/apt/sources.list.orig ] && return 0
@@ -27,9 +34,4 @@ SOURCES
 }
 
 # updates the package index
-[ -f /var/cache/apt/limit ] && [ /var/cache/apt/limit -nt /etc/apt/sources.list ] || {
-    touch /var/cache/apt/limit
-
-    echo "Updating package index..."
-    aptitude update >/dev/null || exit 1
-}
+[ -f /var/cache/apt/limit ] && [ /var/cache/apt/limit -nt /etc/apt/sources.list ] || apt-update
