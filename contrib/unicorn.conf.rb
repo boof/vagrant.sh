@@ -12,7 +12,7 @@ pid "/var/run/unicorn/vagrant.pid"
 stderr_path "/vagrant/log/unicorn.stderr.log"
 stdout_path "/vagrant/log/unicorn.stdout.log"
 
-preload_app true
+preload_app false
 GC.respond_to?(:copy_on_write_friendly=) and
   GC.copy_on_write_friendly = true
 
