@@ -22,7 +22,7 @@ function rackup-on () {
 
     # (re)start unicorn
     local pidfile=`grep -P '^pid ' $config | cut -d ' ' -f 2 | sed "s/^\([\"']\)\(.*\)\1\$/\2/g"`
-    [ -e $pidfile ] && kill -s HUP `cat $pidfile` || {
+    [ -e $pidfile ] && kill -s HUP `cat $pidfile` 2>/dev/null || {
         local start="unicorn --daemonize --config-file $config"
 
         # install unicorn unless installed?
