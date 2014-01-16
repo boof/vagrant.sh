@@ -5,11 +5,6 @@ function has () {
     dpkg -s "$1" >/dev/null 2>&1
 }
 
-function apt_install () {
-    echo "apt_install is deprecated, use apt-install instead." >&2
-    apt-install $@
-}
-
 # installs packages unattended and w/o output
 function apt-install () {
     echo "+ $@"
