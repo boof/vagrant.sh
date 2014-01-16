@@ -27,7 +27,7 @@ function rails-on () {
         create-db "${name}_test" $name
     }
 
-    carry-out log:clear tmp:clear db:migrate -d $directory
+    carry-out log:clear tmp:clear db:migrate
 
     rackup-on $1 $2
     cd $working_directory
