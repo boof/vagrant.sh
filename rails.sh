@@ -11,6 +11,8 @@ function rails-on () {
     cd $directory
 
     [ -e $directory/config.ru ] || {
+        echo "Deploying Rails app into ${directory}..."
+
         set-ruby 2.1
         can rails || gem install rails --no-ri --no-rdoc >/dev/null
 
@@ -19,13 +21,13 @@ function rails-on () {
         # enable unicorn
         sed -i "s/^# gem 'therubyracer'/gem 'therubyracer'/g" "$directory/Gemfile"
         sed -i "s/^# gem 'unicorn'/gem 'unicorn'/g" "$directory/Gemfile"
-
-        # create databases
-        create-db-user $name
-        create-db "${name}_development" $name
-        create-db "${name}_production" $name
-        create-db "${name}_test" $name
     }
+
+    # create databases
+    create-db-user $name
+    create-db "${name}_development" $name
+    create-db "${name}_production" $name
+    create-db "${name}_test" $name
 
     carry-out log:clear tmp:clear db:migrate
 
