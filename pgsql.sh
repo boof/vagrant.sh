@@ -3,6 +3,8 @@
 provides database
 provision apt
 
+DB_DRIVER=postgresql
+
 function create-db-user () {
 	local user=${1}
 	sudo -u postgres createuser --superuser $user

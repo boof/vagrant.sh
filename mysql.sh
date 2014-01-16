@@ -3,6 +3,8 @@
 provision apt
 provides database
 
+DB_DRIVER=mysql
+
 function create-db-user () {
     local username=${1}
     local password=${2:-$username}
