@@ -3,42 +3,6 @@
 provision apt
 
 ## Public
-function rackup-on () {
-    local port=${1:-3000}
-    local directory=`readlink -f ${2:-/vagrant}`
-    local config=$directory/unicorn.conf.rb
-
-    # configure unicorn
-    [ -e $config ] || {
-        cp "$DIR/contrib/unicorn.conf.rb" "$directory/unicorn.conf.rb"
-
-        sed -i "s/listen 3000/listen $port/" "$directory/unicorn.conf.rb"
-        sed -i 's|"/vagrant|"'$directory'|g' "$directory/unicorn.conf.rb"
-        sed -i "s|unicorn/vagrant|unicorn/`basename $directory`|g" "$directory/unicorn.conf.rb"
-    }
-
-    # create directory
-    [ -d /var/run/unicorn ] || mkdir /var/run/unicorn
-    chown -R $user:$group /var/run/unicorn
-
-    # (re)start unicorn
-    local pidfile=`grep -P '^pid ' $config | cut -d ' ' -f 2 | sed "s/^\([\"']\)\(.*\)\1\$/\2/g"`
-    [ -e $pidfile ] && kill -s HUP `cat $pidfile` 2>/dev/null || {
-        local start="unicorn --daemonize --config-file $config"
-
-        # install unicorn unless installed?
-        can unicorn || gem install unicorn --no-ri --no-rdoc >/dev/null
-
-        # TODO create service
-        if [ -e $directory/Gemfile ];
-        then
-            install-bundle $directory
-            BUNDLE_GEMFILE=$directory/Gemfile as $user "bundle exec $start" && return 0
-        else
-            as $user $start && return 0
-        fi
-    }
-}
 
 # installs Ruby (defined in /vagrant/.ruby-version or given as parameter)
 # and modifies PATH
@@ -67,7 +31,7 @@ function install-bundle () {
     install-gem-dependencies $gemfile
 
     as vagrant 'bundle check' >/dev/null || {
-        echo "Installing bundle from ${gemfile}..."
+        echo "Installing bundle from ${gemfile} (this could take a while)..."
         as vagrant "bundle install --no-deployment --path=/home/vagrant/gems --gemfile=${gemfile} --no-cache --without doc production" >/dev/null
     }
 }

@@ -1,0 +1,10 @@
+{
+	"port": 3000,
+	"environment": "development",
+	"max_pool_size": 4,
+	"min_instances": 1,
+	"spawn_method": "smart",
+	"ssl": false,
+	"ssl_certificate": "/path-to-cert.crt",
+	"ssl_certificate_key": "/path-to-cert.key"
+}

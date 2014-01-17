@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-provision ruby build database
+provision ruby build rack database
 
 function rails-on () {
     local directory=`readlink -f ${2:-/vagrant}`
@@ -18,9 +18,9 @@ function rails-on () {
 
         as $user "yes | rails new . --database=$DB_DRIVER --skip-bundle" >/dev/null
 
-        # enable unicorn
         sed -i "s/^# gem 'therubyracer'/gem 'therubyracer'/g" "$directory/Gemfile"
-        sed -i "s/^# gem 'unicorn'/gem 'unicorn'/g" "$directory/Gemfile"
+        # TODO
+        # config/environments/development.rb: config.assets.debug = false
     }
 
     # create databases
