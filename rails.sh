@@ -10,10 +10,11 @@ function rails-on () {
     [ -d $directory ] || mkdir -p $directory
     cd $directory
 
+    set-ruby 2.1
+
     [ -e $directory/config.ru ] || {
         echo "Deploying Rails app into ${directory}..."
 
-        set-ruby 2.1
         can rails || gem install rails --no-ri --no-rdoc >/dev/null
 
         as $user "yes | rails new . --database=$DB_DRIVER --skip-bundle" >/dev/null
