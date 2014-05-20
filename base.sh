@@ -31,7 +31,7 @@ function provision () {
     done
 }
 function set-timezone () {
-    grep $1 /etc/timezone >/dev/null || {
+    grep -q $1 /etc/timezone || {
         echo $1 > /etc/timezone
         dpkg-reconfigure --frontend noninteractive tzdata 2>/dev/null
     }
